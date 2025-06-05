@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Her</title>
+  <style>
+    @keyframes heart-opacity {
+      0% {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+
+      40% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      60% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+    }
+
+    @keyframes heart-pos {
+      0% {
+        transform: scale(0.5) translate3d(0, 0, 0);
+      }
+
+      100% {
+        transform: scale(1) translate3d(-450px, 450px, 0);
+      }
+    }
+
+    @keyframes sparkle {
+      0% {
+        background-position: 0 0;
+      }
+
+      100% {
+        background-position: 50px 50px;
+      }
+    }
+
+    @keyframes bloom {
+      0% {
+        transform: translateX(-50%) scale(0) translateY(50px);
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateX(-50%) scale(1) translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes sway {
+      0%, 100% {
+        transform: translateX(-50%) scale(1) rotate(0deg);
+      }
+
+      50% {
+        transform: translateX(-50%) scale(1) rotate(3deg);
+      }
+    }
+
+    /* Cánh hoa đung đưa */
+    @keyframes petal-sway1 {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(5deg); }
+    }
+
+    @keyframes petal-sway2 {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(-6deg); }
+    }
+
+    @keyframes petal-sway3 {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(4deg); }
+    }
+
+    @keyframes petal-sway4 {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(-5deg); }
+    }
+
+    @keyframes petal-sway5 {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(3deg); }
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .index-bg {
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(-225deg, #ffe6f0 0%, #fcbad3 50%, #ffb6c1 100%);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .index-bg::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(to top, rgba(255, 182, 193, 0.8), transparent);
+      z-index: 1;
+    }
+
+    .index-bg::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+      animation: sparkle 4s linear infinite;
+    }
+
+    .heart {
+      height: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: radial-gradient(circle at center, #ff9aa2, #ff6f91);
+      transform-origin: 100% 0;
+      animation: heart-opacity 5s infinite ease-in, heart-pos 5s infinite ease-in;
+      z-index: 2;
+      filter: drop-shadow(0 0 6px #ff99aa) drop-shadow(0 0 10px #ff6f91);
+    }
+
+    .star:before,
+    .star:after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: radial-gradient(circle at center, #ff9aa2, #ff6f91);
+      border-radius: 50%;
+    }
+
+    .star:before {
+      top: -5px;
+      left: 0;
+    }
+
+    .star:after {
+      left: -5px;
+      top: 0;
+    }
+
+    .flower {
+      position: absolute;
+      bottom: 0;
+      transform: scale(0);
+      transform-origin: bottom center;
+    }
+
+    .flower svg {
+      width: 100px;
+      height: 200px;
+    }
+
+    .sway {
+      animation: sway 4s infinite ease-in-out;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="index-bg">
+    <div class="heart"></div>
+
+
+
+  <script>
+    const container = document.querySelector('.heart');
+
+    // Hàm trả về SVG hoa với animation cánh hoa
+    
+
+    // Thả tim rơi sau 5s
+    setTimeout(() => {
+      for (let i = 0; i < 2; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'star';
+        heart.style.left = `${Math.random() * window.innerWidth}px`;
+        heart.style.top = `${Math.random() * 100}px`;
+        heart.style.animationDelay = `${Math.random() * 1.5}s`;
+        container.appendChild(heart);
+      }
+    }, 5000);
+
+    // Bắt đầu rơi nhiều hơn
+    setTimeout(() => {
+      let count = 0;
+      const interval = setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'star';
+        heart.style.left = `${Math.random() * window.innerWidth}px`;
+        heart.style.top = `${Math.random() * 100}px`;
+        heart.style.animationDelay = `${Math.random() * 3}s`;
+        container.appendChild(heart);
+        if (++count >= 30) clearInterval(interval);
+      }, 300);
+    }, 6000);
+  </script>
+</body>
+
+</html>
